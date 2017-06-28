@@ -15,13 +15,18 @@ RUN curl -L http://repository.egi.eu/sw/production/cas/1/current/repo-files/EGI-
     && yum -y install ca-policy-egi-core fetch-crl \
     && cd /etc/pki/ca-trust/source/anchors \
     && ln -s /etc/grid-security/certificates/*.pem . \
-    && update-ca-trust extract
+    && update-ca-trust extract \
+    && cd /
 
 RUN fetch-crl || exit 0
 
 # Put your host certificates in certs folder
-COPY certs/cert.pem /etc/grid-security/hostcert.pem
-COPY certs/key.pem /etc/grid-security/hostkey.pem
+COPY certs/cert.pem etc/grid-security/hostcert.pem
+COPY certs/key.pem etc/grid-security/hostkey.pem
+COPY cloudkeeper.yml etc/cloudkeeper/cloudkeeper.yml
 
+RUN mkdir etc/cloudkeeper-os \
+    && curl -L https://raw.githubusercontent.com/the-cloudkeeper-project/cloudkeeper-os/master/etc/cloudkeeper-os/cloudkeeper-os-config-generator.conf > etc/cloudkeeper-os/cloudkeeper-os-config-generator.conf \
+    && oslo-config-generator --config-file etc/cloudkeeper-os/cloudkeeper-os-config-generator.conf --output etc/cloudkeeper-os/cloudkeeper-os.conf
 
 EXPOSE 50505
