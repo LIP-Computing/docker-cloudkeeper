@@ -1,0 +1,9 @@
+FROM centos:7
+MAINTAINER Luís Alves <lalves@lip.pt>
+
+RUN yum -y update
+RUN yum install -y https://repos.fedorapeople.org/repos/openstack/openstack-mitaka/rdo-release-mitaka-7.noarch.rpm \
+    && epel-release nginx python-glanceclient python-keystoneauth1 python-oslo-config python-oslo-log \
+    && http://repository.egi.eu/sw/untested/cmd-os/1/centos7/x86_64/cloudkeeper-1.4.1+20170524191710-2.el7.x86_64.rpm
+
+EXPOSE 50505
