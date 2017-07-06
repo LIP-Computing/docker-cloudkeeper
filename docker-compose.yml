@@ -3,24 +3,13 @@ services:
   cloudkeeper:
     image: cloudkeeper:latest
     volumes:
-        - type: bind
-          source: /etc/grid-security
-          target: /etc/grid-security
-          volume:
-              nocopy: true
+      - /etc/grid-security:/etc/grid-security
     links:
       - cloudkeeper-os
   cloudkeeper-os:
     image: cloudkeeper-os:latest
     volumes:
-        - type: bind
-          source: /etc/grid-security
-          target: /etc/grid-security
-          volume:
-              nocopy: true
+      - /etc/grid-security:/etc/grid-security
     expose:
       - "50505"
-    ports:
-      - "50505:50505"
-    links:
-      - cloudkeeper
+
