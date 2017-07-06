@@ -1,15 +1,26 @@
-version: '2'
+version: "2"
 services:
   cloudkeeper:
-    image: cloudkeeper
+    image: cloudkeeper:latest
     volumes:
-      - /etc/grid-security/hostcert.pem:/etc/grid-security/hostcert.pem
-      - /etc/grid-security/hostkey.pem:/etc/grid-security/hostkey.pem
-      - /etc/grid-security/certificates/:/etc/grid-security/certificates/
+        - type: bind
+          source: /etc/grid-security
+          target: /etc/grid-security
+          volume:
+              nocopy: true
+    links:
+      - cloudkeeper-os
+  cloudkeeper-os:
+    image: cloudkeeper-os:latest
+    volumes:
+        - type: bind
+          source: /etc/grid-security
+          target: /etc/grid-security
+          volume:
+              nocopy: true
+    expose:
+      - "50505"
     ports:
       - "50505:50505"
-  cloudkeeper-os:
-    image: cloudkeeper-os
-    volumes:
     links:
       - cloudkeeper

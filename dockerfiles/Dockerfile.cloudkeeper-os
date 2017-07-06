@@ -16,4 +16,6 @@ RUN mkdir etc/cloudkeeper-os \
 
 RUN systemctl enable cloudkeeper-os.service
 
+EXPOSE 50505
+
 CMD ["/usr/sbin/init"]

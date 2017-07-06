@@ -6,4 +6,12 @@ RUN yum install -y https://repos.fedorapeople.org/repos/openstack/openstack-mita
 RUN yum install -y epel-release nginx python-glanceclient python-keystoneauth1 python-oslo-config python-oslo-log \
         http://repository.egi.eu/sw/untested/cmd-os/1/centos7/x86_64/cloudkeeper-1.4.1+20170524191710-2.el7.x86_64.rpm
 
-EXPOSE 50505
+RUN cloudkeeper sync \
+    --backend-endpoint=127.0.0.1:50505 \
+    --external-tools-execution-timeout= \
+    --formats= \
+    --image-dir= \
+    --image-lists= \
+    --qemu-img-binary=
+
+
