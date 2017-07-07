@@ -1,3 +1,8 @@
 #!/bin/bash
-docker build -t cloudkeeper -f dockerfiles/Dockerfile.cloudkeeper ./dockerfiles/
-docker build -t cloudkeeper-os -f dockerfiles/Dockerfile.cloudkeeper-os ./dockerfiles/
+#
+# by lalves at lip.pt 2017
+#
+##
+
+docker build -t cloudkeeper -f cloudkeeper/dockerfile ./cloudkeeper/
+docker build -t cloudkeeper-os -f cloudkeeper-os/dockerfile ./cloudkeeper-os/

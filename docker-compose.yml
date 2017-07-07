@@ -1,12 +1,14 @@
 version: "2"
 services:
   cloudkeeper:
+    build: cloudkeeper/.
     image: cloudkeeper:latest
     volumes:
       - /etc/grid-security:/etc/grid-security
     links:
       - cloudkeeper-os
   cloudkeeper-os:
+    build: cloudkeeper-os/.
     image: cloudkeeper-os:latest
     volumes:
       - /etc/grid-security:/etc/grid-security
