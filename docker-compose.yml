@@ -12,6 +12,4 @@ services:
     image: cloudkeeper-os:latest
     volumes:
       - /etc/grid-security:/etc/grid-security
-    expose:
-      - "50505"
 

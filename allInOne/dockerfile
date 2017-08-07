@@ -1,3 +1,6 @@
+#
+# Not working!
+
 FROM centos:7
 MAINTAINER Luís Alves <lalves@lip.pt>
 
@@ -6,10 +9,13 @@ RUN yum install -y --nogpgcheck https://repos.fedorapeople.org/repos/openstack/o
 RUN yum install -y --nogpgcheck wget nginx python2-glanceclient python-keystoneauth1 python-oslo-config python-oslo-log \
         http://repository.egi.eu/sw/untested/cmd-os/1/centos7/x86_64/cloudkeeper-1.5.0+20170710170557-1.el7.x86_64.rpm
 
+COPY cloudkeeper.yml etc/cloudkeeper/cloudkeeper.yml
 
+RUN wget -P etc/cron.d/ https://raw.githubusercontent.com/the-cloudkeeper-project/cloudkeeper/master/examples/etc/cron.d/cloudkeeper
 RUN wget -P etc/yum.repos.d/ http://grand-est.fr/resources/software/cloudkeeper-os/repofiles/centos7/cloudkeeper-os.repo
 
 RUN yum clean all && yum -y update && yum install -y --nogpgcheck cloudkeeper-os
+RUN /sbin/chkconfig cloudkeeper-os on
 
 COPY cloudkeeper-os-config-generator.conf etc/cloudkeeper-os/cloudkeeper-os-config-generator.conf
 
@@ -17,6 +23,4 @@ RUN oslo-config-generator \
         --config-file etc/cloudkeeper-os/cloudkeeper-os-config-generator.conf \
         --output etc/cloudkeeper-os/cloudkeeper-os.conf
 
-EXPOSE 50051
-
-CMD ["/usr/bin/cloudkeeper-os"]
+CMD ["/etc/init.d/cloudkeeper-cron start"]

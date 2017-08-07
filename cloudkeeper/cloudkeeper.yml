@@ -1,5 +1,6 @@
 cloudkeeper:
-  image-lists: # List of image lists to sync against
+  image-lists:  # List of image lists to sync against
+    - https://TOKEN_HERE:x-oauth-basic@vmcaster.appdb.egi.eu/store/vappliance/docker.ubuntu.14.04/image.list
   ca-dir: /etc/grid-security/certificates/ # CA directory
   authentication: false # core (client) <-> backend (server) authentication (certificate, key and backend-certificate options)
   certificate: /etc/grid-security/hostcert.pem # Core's host certificate
@@ -23,7 +24,7 @@ cloudkeeper:
       port: # Proxy port
       ssl: false # Whether proxy will use SSL connection
   backend:
-    endpoint: nimbus-stor.ncg.ingrid.pt:50051 # Backend's gRPC endpoint
+    endpoint: cloudkeeper-os:50051 # Backend's gRPC endpoint
     certificate: /etc/grid-security/backendcert.pem # Backend's certificate
   formats: # List of acceptable formats images can be converted to
     - qcow2
@@ -31,5 +32,4 @@ cloudkeeper:
     level: ERROR # Logging level
     file: /var/log/cloudkeeper/cloudkeeper.log # File to write log to. To turn off file logging leave this field empty.
   lock-file: /var/lock/cloudkeeper/cloudkeeper.lock # File used to ensure only one running instance of cloudkeeper
-  debug: false # Debug mode
-
+  debug: true # Debug mode
